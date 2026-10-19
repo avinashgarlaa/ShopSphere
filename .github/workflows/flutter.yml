@@ -13,8 +13,8 @@ jobs:
   analyze-and-test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: subosito/flutter-action@v2
+      - uses: actions/checkout@v4.2.2
+      - uses: subosito/flutter-action@v2.23.0
         with:
           channel: stable
           cache: true
