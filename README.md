@@ -497,7 +497,7 @@ With additional development time, I would improve:
 
 ## 12. Author
 
-### Avinash Garla
+### Avinash 
 
 **B.Tech — Electronics & Communication Engineering**  
 National Institute of Technology, Hamirpur
@@ -508,34 +508,4 @@ National Institute of Technology, Hamirpur
 
 🔗 **GitHub:** [github.com/avinashgarlaa](https://github.com/avinashgarlaa)
 
-🔗 **LinkedIn:** `https://www.linkedin.com/in/<your-linkedin>`
-
----
-
-## AI Assistance
-
-AI tools were used during implementation and review for development assistance, debugging, code suggestions and documentation.
-
-All submitted code has been reviewed by the developer, and the developer is responsible for understanding and explaining the implementation.
-
----
-
-## Final Submission Checklist
-
-- [ ] Public GitHub repository created
-- [ ] Repository named `ShopSphere`
-- [ ] 20+ meaningful Conventional Commits
-- [ ] No build artifacts, secrets or keystores committed
-- [ ] `flutter analyze` reports zero issues
-- [ ] `flutter test` passes
-- [ ] 4+ phone screenshots added
-- [ ] 2+ tablet/landscape screenshots added
-- [ ] Error scenarios tested
-- [ ] 2–4 minute demo video recorded
-- [ ] Release APK built and smoke-tested
-- [ ] APK named `ShopSphere_<FullName>_v1.0.0.apk`
-- [ ] GitHub Release created with tag `v1.0.0`
-- [ ] Google Drive folder contains APK, demo video and screenshots
-- [ ] Google Drive sharing set to **Anyone with the link – Viewer**
-- [ ] All links tested in an incognito/private window
-- [ ] Submission email sent before the deadline
+🔗 **LinkedIn:** [linkedin.com/in/avinash-garla-35b1b42a0](https://www.linkedin.com/in/avinash-garla-35b1b42a0)
