@@ -1,0 +1,21 @@
+{
+  "id": 101,
+  "title": "Everyday Wireless Headphones",
+  "description": "Comfortable wireless headphones for daily listening.",
+  "price": 79.99,
+  "discountPercentage": 12.5,
+  "rating": 4.6,
+  "stock": 18,
+  "thumbnail": "https://example.com/headphones.webp",
+  "images": ["https://example.com/headphones.webp"],
+  "category": "mobile-accessories",
+  "brand": "SphereSound",
+  "reviews": [
+    {
+      "rating": 5,
+      "comment": "Comfortable and clear.",
+      "reviewerName": "Avery",
+      "date": "2026-08-12"
+    }
+  ]
+}
