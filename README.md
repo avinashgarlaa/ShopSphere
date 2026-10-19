@@ -92,7 +92,7 @@ The Android minimum SDK is 26 (Android 8.0). The current Gradle release configur
 
 ## Testing
 
-Run `flutter test` for the unit and widget suite, or `flutter test --coverage` to regenerate the LCOV report at `coverage/lcov.info`. The current suite has 32 passing tests covering repository success/server/network/not-found paths, login validation, password visibility and compact-screen text scaling, product/cart JSON and calculations, sorting, controller loading/failure/stale-request behavior, and auth-header attachment. The latest measured line coverage is 19.8% (329 of 1,658 lines); the optional 60% target has not been reached. GitHub Actions runs `flutter analyze` and `flutter test` for pushes and pull requests.
+Run `flutter test` for the unit and widget suite, or `flutter test --coverage` to regenerate the LCOV report at `coverage/lcov.info`. The current suite has 33 passing tests covering repository success/server/network/not-found paths, login validation, password visibility and compact-screen text scaling, splash timing and session routing, product/cart JSON and calculations, sorting, controller loading/failure/stale-request behavior, and auth-header attachment. The latest measured line coverage is 24.0% (414 of 1,722 lines); the optional 60% target has not been reached. GitHub Actions runs `flutter analyze` and `flutter test` for pushes and pull requests.
 
 ## Test credentials
 

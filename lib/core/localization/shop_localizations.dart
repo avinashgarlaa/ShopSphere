@@ -17,6 +17,8 @@ class ShopLocalizations {
       key;
 
   static const _english = <String, String>{
+    'splashTagline': 'Thoughtful finds for everyday living.',
+    'preparingApp': 'Preparing your finds…',
     'discover': 'Discover',
     'cart': 'Cart',
     'profile': 'Profile',
@@ -114,6 +116,8 @@ class ShopLocalizations {
   };
 
   static const _hindi = <String, String>{
+    'splashTagline': 'रोज़मर्रा के लिए खास चीज़ें।',
+    'preparingApp': 'आपके लिए चीज़ें तैयार हो रही हैं…',
     'discover': 'खोजें',
     'cart': 'कार्ट',
     'profile': 'प्रोफ़ाइल',

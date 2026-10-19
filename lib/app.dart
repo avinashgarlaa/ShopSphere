@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -36,12 +38,39 @@ class ShopSphereApp extends ConsumerWidget {
   );
 }
 
-class AppGate extends ConsumerWidget {
+class AppGate extends ConsumerStatefulWidget {
   const AppGate({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<AppGate> createState() => _AppGateState();
+}
+
+class _AppGateState extends ConsumerState<AppGate> {
+  static const _minimumSplashDuration = Duration(milliseconds: 1800);
+
+  Timer? _splashTimer;
+  var _minimumSplashElapsed = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _splashTimer = Timer(_minimumSplashDuration, () {
+      if (mounted) setState(() => _minimumSplashElapsed = true);
+    });
+  }
+
+  @override
+  void dispose() {
+    _splashTimer?.cancel();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final session = ref.watch(sessionProvider);
+    if (!_minimumSplashElapsed || session is SessionChecking) {
+      return const SplashScreen();
+    }
     return switch (session) {
       SessionChecking() => const SplashScreen(),
       SessionSignedOut(:final notice) => LoginScreen(notice: notice),
@@ -50,40 +79,158 @@ class AppGate extends ConsumerWidget {
   }
 }
 
-class SplashScreen extends StatelessWidget {
+class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-    body: Center(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Container(
-            width: 88,
-            height: 88,
-            decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.primary,
-              borderRadius: BorderRadius.circular(28),
+  State<SplashScreen> createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _entryController;
+  late final Animation<double> _fade;
+  late final Animation<double> _scale;
+
+  @override
+  void initState() {
+    super.initState();
+    _entryController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 850),
+    )..forward();
+    _fade = CurvedAnimation(parent: _entryController, curve: Curves.easeOut);
+    _scale = Tween<double>(begin: .88, end: 1).animate(
+      CurvedAnimation(parent: _entryController, curve: Curves.easeOutBack),
+    );
+  }
+
+  @override
+  void dispose() {
+    _entryController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final scheme = theme.colorScheme;
+    final strings = ShopLocalizations.of(context);
+    final reduceMotion = MediaQuery.of(context).disableAnimations;
+    final identity = Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          width: 104,
+          height: 104,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [scheme.primary, scheme.primary.withValues(alpha: .82)],
             ),
-            child: Icon(
-              Icons.shopping_bag_rounded,
-              color: Theme.of(context).colorScheme.onPrimary,
-              size: 44,
+            borderRadius: BorderRadius.circular(34),
+            boxShadow: [
+              BoxShadow(
+                color: scheme.primary.withValues(alpha: .22),
+                blurRadius: 28,
+                offset: const Offset(0, 12),
+              ),
+            ],
+          ),
+          child: Icon(
+            Icons.local_mall_rounded,
+            color: scheme.onPrimary,
+            size: 48,
+          ),
+        ),
+        const SizedBox(height: 28),
+        Text(
+          'SHOPSPHERE',
+          style: theme.textTheme.titleLarge?.copyWith(
+            color: scheme.primary,
+            letterSpacing: 2.4,
+            fontWeight: FontWeight.w800,
+          ),
+        ),
+        const SizedBox(height: 8),
+        Text(
+          strings.text('splashTagline'),
+          textAlign: TextAlign.center,
+          style: theme.textTheme.bodyLarge?.copyWith(
+            color: scheme.onSurfaceVariant,
+          ),
+        ),
+        const SizedBox(height: 36),
+        SizedBox(
+          width: 72,
+          child: Semantics(
+            label: strings.text('preparingApp'),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: const LinearProgressIndicator(minHeight: 4),
             ),
           ),
-          const SizedBox(height: 20),
-          Text('ShopSphere', style: Theme.of(context).textTheme.headlineSmall),
-          const SizedBox(height: 32),
-          const SizedBox(
-            width: 26,
-            height: 26,
-            child: CircularProgressIndicator(strokeWidth: 3),
+        ),
+        const SizedBox(height: 12),
+        Text(
+          strings.text('preparingApp'),
+          style: theme.textTheme.labelMedium?.copyWith(
+            color: scheme.onSurfaceVariant,
+            letterSpacing: .3,
+          ),
+        ),
+      ],
+    );
+
+    return Scaffold(
+      body: Stack(
+        children: [
+          Positioned(
+            top: -110,
+            right: -90,
+            child: ExcludeSemantics(
+              child: Container(
+                width: 280,
+                height: 280,
+                decoration: BoxDecoration(
+                  color: scheme.primaryContainer.withValues(alpha: .55),
+                  shape: BoxShape.circle,
+                ),
+              ),
+            ),
+          ),
+          Positioned(
+            bottom: -140,
+            left: -110,
+            child: ExcludeSemantics(
+              child: Container(
+                width: 320,
+                height: 320,
+                decoration: BoxDecoration(
+                  color: scheme.tertiaryContainer.withValues(alpha: .48),
+                  shape: BoxShape.circle,
+                ),
+              ),
+            ),
+          ),
+          SafeArea(
+            child: Center(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.all(32),
+                child: reduceMotion
+                    ? identity
+                    : FadeTransition(
+                        opacity: _fade,
+                        child: ScaleTransition(scale: _scale, child: identity),
+                      ),
+              ),
+            ),
           ),
         ],
       ),
-    ),
-  );
+    );
+  }
 }
 
 class LoginScreen extends ConsumerStatefulWidget {
