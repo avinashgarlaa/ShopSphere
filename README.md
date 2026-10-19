@@ -1,117 +1,532 @@
 # ShopSphere
 
-ShopSphere is a Flutter shopping catalogue built for the Prosessed Flutter Developer Intern assignment. It uses DummyJSON for sign-in, product discovery, product details, profile data, and simulated checkout; the cart and theme preference are persisted locally.
+ShopSphere is a Flutter shopping catalogue built for the **Prosessed Flutter Developer Intern Technical Assignment**. It uses the **DummyJSON REST API** for authentication, product discovery, search, categories, product details, customer reviews, profile data, and simulated checkout.
 
-**Android release APK:** Built locally at `build/app/outputs/flutter-apk/app-release.apk`; it is debug-signed and must be signed with a private release keystore before distribution.  
-**Demo video:** Not recorded yet.  
-**GitHub repository:** Add the public repository link before submission.
+The app focuses on responsive Material 3 UI, feature-first architecture, Riverpod state management, secure authentication, robust API error handling, local persistence, automated token refresh, and automated testing.
 
-## Screenshots
+**Android Release APK:** `build/app/outputs/flutter-apk/app-release.apk`  
+**Demo Video:** Add Google Drive link before submission  
+**GitHub Repository:** Add public repository link before submission
 
-The required phone and tablet screenshots have not been captured in this workspace. Add at least four phone screenshots and two tablet/landscape screenshots here before submission. Include the login, catalogue, details, cart, profile, and expanded master-detail views.
+---
 
-## Features
+## 1. Title & Overview
 
-### Mandatory requirements
+### User Journey
 
-- [x] Splash gate and persisted secure sign-in session.
-- [x] Login validation, password visibility, loading feedback, and friendly invalid-credential errors.
-- [x] Responsive product grid, API categories, debounced search, sorting, pull-to-refresh, pagination, skeletons, empty state, and retryable failures.
-- [x] Product details with image carousel, rating, brand, price/discount, stock, quantity selector, reviews, and a graceful not-found state.
-- [x] Locally persisted cart, quantity updates/removal, live badge, subtotal/discount/total, simulated checkout, and success confirmation.
-- [x] Profile from `/auth/me`; manual logout and forced logout after an unauthorized profile response.
-- [x] Light/dark theme preference persistence; compact, medium, and expanded layouts.
+```text
+Splash
+  │
+  ├── Valid session ───────────────► Home
+  │
+  └── No valid session ────────────► Login
+                                      │
+                                      ▼
+                              Product Catalogue
+                              │      │      │
+                    Search / Filter / Sort
+                              │
+                              ▼
+                       Product Details
+                              │
+                              ▼
+                         Add to Cart
+                              │
+                              ▼
+                            Cart
+                              │
+                              ▼
+                          Checkout
+                              │
+                              ▼
+                       Order Confirmation
 
-### Bonus and submission work
+Profile ──► View User ──► Logout
+```
 
-- [x] Automatic access-token refresh and one-time request retry; failed refresh clears the secure session.
-- [x] Persisted wishlist, cached product pages with an offline banner, persisted English/Hindi selection, widget test, and GitHub Actions checks.
-- [ ] Device/emulator screenshots, error-scenario recording, and release APK upload.
+ShopSphere uses DummyJSON as the public backend. No custom backend is required.
 
-## Tech stack
+---
 
-- Flutter 3.44.0 / Dart 3.12.0 (stable at implementation time).
-- `flutter_riverpod` for dependency injection and feature state controllers, keeping repositories out of widgets.
-- `dio` for the shared configured HTTP client, timeouts, auth headers, debug logging, and failure mapping.
-- `flutter_secure_storage` 10 for access and refresh tokens stored in the platform secure store.
-- `shared_preferences` for local cart, theme, language, wishlist, and product-page-cache persistence.
-- `cached_network_image` for network product and profile images with loading/error placeholders.
-- `intl` for locale-aware currency formatting.
-- `mocktail` and `flutter_test` for isolated repository, controller, model, and widget tests.
+## 2. Screenshots
 
-## Architecture
+Add the required screenshots before submission.
 
-Feature-first, clean-architecture-inspired layers keep domain contracts independent of Flutter and HTTP:
+### Phone Screenshots
+
+| Login | Product Catalogue |
+|---|---|
+| `screenshots/phone_login.png` | `screenshots/phone_catalogue.png` |
+
+| Product Details | Cart |
+|---|---|
+| `screenshots/phone_details.png` | `screenshots/phone_cart.png` |
+
+### Tablet / Landscape Screenshots
+
+| Master-Detail | Expanded Catalogue |
+|---|---|
+| `screenshots/tablet_master_detail.png` | `screenshots/tablet_landscape.png` |
+
+The final submission should contain at least **4 phone screenshots and 2 tablet/landscape screenshots**.
+
+---
+
+## 3. Features
+
+### Mandatory Requirements
+
+- [x] Splash screen with persisted secure sign-in session
+- [x] Login validation
+- [x] Password visibility toggle
+- [x] Login loading feedback
+- [x] Friendly invalid-credential errors
+- [x] Responsive product grid
+- [x] API-driven categories
+- [x] Debounced product search
+- [x] Product sorting
+- [x] Pull-to-refresh
+- [x] Infinite-scroll pagination
+- [x] Skeleton loading states
+- [x] Empty results state
+- [x] Retryable API failures
+- [x] Product image carousel
+- [x] Product rating and brand
+- [x] Price and discount information
+- [x] Stock status
+- [x] Quantity selector
+- [x] Customer reviews
+- [x] Graceful product-not-found state
+- [x] Locally persisted cart
+- [x] Cart quantity updates
+- [x] Cart item removal
+- [x] Real-time cart badge
+- [x] Subtotal, discount and grand total
+- [x] Simulated checkout
+- [x] Checkout success confirmation
+- [x] Profile loaded from `/auth/me`
+- [x] Manual logout
+- [x] Forced logout after unauthorized profile response
+- [x] Light/dark theme preference persistence
+- [x] Compact, medium and expanded responsive layouts
+
+### Bonus Features
+
+- [x] Automatic access-token refresh
+- [x] One-time request retry after token refresh
+- [x] Failed refresh clears the secure session
+- [x] Persisted wishlist
+- [x] Cached product pages
+- [x] Offline banner
+- [x] Persisted English/Hindi selection
+- [x] Widget test
+- [x] GitHub Actions checks
+- [ ] Device/emulator screenshots
+- [ ] Error-scenario recording
+- [ ] Final release APK upload
+
+---
+
+## 4. Tech Stack
+
+| Technology | Purpose |
+|---|---|
+| **Flutter 3.44.0** | Cross-platform mobile application framework |
+| **Dart 3.12.0** | Application programming language |
+| **flutter_riverpod** | State management and dependency injection |
+| **Dio** | HTTP client, timeouts, interceptors and API communication |
+| **flutter_secure_storage** | Secure storage for access and refresh tokens |
+| **shared_preferences** | Local cart, theme, language, wishlist and cache persistence |
+| **cached_network_image** | Network image caching with loading/error placeholders |
+| **intl** | Locale-aware currency formatting |
+| **flutter_test** | Unit and widget testing |
+| **mocktail** | Mocking repositories and dependencies |
+| **GitHub Actions** | Continuous integration |
+
+### Why these packages?
+
+- **Riverpod** keeps business logic and dependencies outside widgets.
+- **Dio** provides a centralized HTTP client with interceptors and timeout handling.
+- **flutter_secure_storage** protects authentication tokens using platform secure storage.
+- **shared_preferences** provides lightweight persistence for local application state.
+- **cached_network_image** improves image loading and provides placeholders/errors.
+- **mocktail** allows repositories and dependencies to be isolated during testing.
+
+---
+
+## 5. Architecture
+
+ShopSphere follows a **feature-first, clean-architecture-inspired structure**.
 
 ```text
 lib/
-  core/                 # networking, failures, DI, theme, storage, shared UI
-  features/
-    auth/               # login contracts, repository, session controller
-    products/           # product entities, repository, browse/detail UI
-    cart/               # cart entities, local persistence, checkout
-    profile/            # signed-in user UI
-  app.dart              # session gate, login, responsive app shell
-  main.dart             # startup and SharedPreferences bootstrap
+├── core/
+│   ├── network/
+│   ├── error/
+│   ├── storage/
+│   ├── theme/
+│   ├── utils/
+│   └── widgets/
+│
+├── features/
+│   ├── auth/
+│   │   ├── data/
+│   │   ├── domain/
+│   │   └── presentation/
+│   │
+│   ├── products/
+│   │   ├── data/
+│   │   ├── domain/
+│   │   └── presentation/
+│   │
+│   ├── cart/
+│   │   ├── data/
+│   │   ├── domain/
+│   │   └── presentation/
+│   │
+│   └── profile/
+│       ├── data/
+│       ├── domain/
+│       └── presentation/
+│
+├── app.dart
+└── main.dart
+
+test/
+└── features/
 ```
 
-Product-list data flow:
+### Product Request Data Flow
 
 ```text
-ProductsScreen → ProductsController → ProductsRepository
-  → ApiClient / DummyJSON → Result<ProductsPage>
-  → ProductsState → ProductsScreen
+ProductsScreen
+      │
+      ▼
+ProductsController
+      │
+      ▼
+ProductsRepository
+      │
+      ▼
+ApiClient / Dio
+      │
+      ▼
+DummyJSON API
+      │
+      ▼
+Product Model
+      │
+      ▼
+Result<ProductsPage>
+      │
+      ▼
+ProductsState
+      │
+      ▼
+ProductsScreen
 ```
 
-## State management
+The presentation layer does not directly instantiate repositories or communicate with the HTTP client.
 
-Riverpod provides dependency injection and `Notifier` controllers for product, cart, session, theme, and navigation state. Business rules such as pagination, debouncing, cart persistence, and session transitions stay out of widgets. Async states are modeled explicitly with small sealed result/failure types rather than generated unions; this avoids code generation but requires maintaining state transitions manually.
+---
 
-## Error handling
+## 6. State Management
 
-`ApiClient` maps network errors, timeouts, HTTP validation/authorization/not-found/server responses, and unknown failures to typed `Failure` objects. Repositories return `Result<T>` for API-driven operations, and screens provide retry or empty feedback. Unauthorized requests trigger a serialized refresh attempt and retry once; failed refresh or a rejected retry clears the secure session and returns to login.
+ShopSphere uses **Riverpod** for state management and dependency injection.
 
-## Getting started
+Riverpod manages product, cart, authentication/session, theme and navigation-related state while keeping repositories outside widgets.
 
-Prerequisites: Flutter 3.44.0 or a compatible stable SDK and Android tooling.
+Business rules such as pagination, debounced search, cart persistence and session transitions are handled by controllers rather than UI widgets.
+
+Async states are modeled explicitly using small result/failure types instead of generated unions. This avoids code generation and keeps state transitions visible, although it requires maintaining those transitions manually.
+
+---
+
+## 7. Error Handling
+
+API communication is centralized through a configured `Dio` client.
+
+The network layer handles:
+
+- Network connection failures
+- Request timeouts
+- HTTP validation errors
+- HTTP 401 authorization errors
+- HTTP 403 refresh failures
+- HTTP 404 not-found responses
+- HTTP 5xx server errors
+- Parsing/model errors
+- Unknown failures
+
+Low-level exceptions are mapped to typed `Failure` objects.
+
+Repositories expose API results through:
+
+```text
+Result<T>
+```
+
+rather than exposing raw Dio exceptions to the presentation layer.
+
+### Authentication Error Flow
+
+```text
+API Request
+    │
+    ▼
+Attach Access Token
+    │
+    ▼
+Response
+    │
+    ├── Success ───────────────► Return Data
+    │
+    └── 401
+         │
+         ▼
+    Refresh Token
+         │
+      ┌──┴───┐
+      │      │
+   Success  Failure
+      │      │
+      ▼      ▼
+ Retry     Clear Session
+ Once          │
+      │        ▼
+      ▼      Login
+  Response
+```
+
+Unauthorized requests trigger a serialized token refresh and one retry.
+
+If token refresh fails, secure tokens are cleared and the application returns to the login screen.
+
+Network-driven screens provide loading, success, empty and error states with retry actions where appropriate.
+
+---
+
+## 8. Getting Started
+
+### Prerequisites
+
+- Flutter 3.44.0 or compatible stable Flutter SDK
+- Dart 3.12.0
+- Android SDK
+- Android device or emulator
+- Android 8.0 / API 26 or higher
+
+### Clone the Repository
+
+```bash
+git clone https://github.com/<username>/prosessed-flutter-assignment.git
+
+cd prosessed-flutter-assignment
+```
+
+### Install Dependencies
 
 ```bash
 flutter pub get
+```
+
+### Analyze the Project
+
+```bash
 flutter analyze
+```
+
+### Run Tests
+
+```bash
 flutter test
+```
+
+### Run the Application
+
+```bash
 flutter run
 ```
 
-No code generation is required. Build an Android release artifact with:
+No code generation is required.
+
+### Build Release APK
 
 ```bash
 flutter build apk --release
 ```
 
-The Android minimum SDK is 26 (Android 8.0). The current Gradle release configuration uses the debug signing key as a local-build convenience; configure a private release keystore outside source control before distributing the APK. Rename the final artifact to `ShopSphere_<FullName>_v1.0.0.apk`.
+The final APK should be renamed:
 
-## Testing
+```text
+ShopSphere_<FullName>_v1.0.0.apk
+```
 
-Run `flutter test` for the unit and widget suite, or `flutter test --coverage` to regenerate the LCOV report at `coverage/lcov.info`. The current suite has 33 passing tests covering repository success/server/network/not-found paths, login validation, password visibility and compact-screen text scaling, splash timing and session routing, product/cart JSON and calculations, sorting, controller loading/failure/stale-request behavior, and auth-header attachment. The latest measured line coverage is 24.0% (414 of 1,722 lines); the optional 60% target has not been reached. GitHub Actions runs `flutter analyze` and `flutter test` for pushes and pull requests.
+The Android minimum SDK is **26 (Android 8.0)**.
 
-## Test credentials
+> The current local release configuration uses the debug signing key as a development convenience. A private release keystore should be configured outside source control before distribution.
+
+---
+
+## 9. Testing
+
+Run the complete test suite:
+
+```bash
+flutter test
+```
+
+Generate coverage:
+
+```bash
+flutter test --coverage
+```
+
+Coverage output:
+
+```text
+coverage/lcov.info
+```
+
+### Current Test Suite
+
+**33 tests passing**
+
+The tests cover:
+
+- Repository success paths
+- Repository server failures
+- Repository network failures
+- Not-found responses
+- Login validation
+- Password visibility
+- Compact-screen text scaling
+- Splash timing
+- Session routing
+- Product JSON parsing
+- Cart JSON parsing
+- Cart calculations
+- Product sorting
+- Controller loading states
+- Controller failure states
+- Stale-request handling
+- Authentication-header attachment
+- Widget behaviour
+
+### Coverage
+
+```text
+414 / 1,722 lines
+24.0% line coverage
+```
+
+The optional 60% coverage target has not yet been reached.
+
+### Continuous Integration
+
+GitHub Actions runs:
+
+```bash
+flutter analyze
+flutter test
+```
+
+for pushes and pull requests.
+
+---
+
+## 10. Test Credentials
+
+The following DummyJSON credentials can be used to test the application:
 
 | Username | Password |
-| --- | --- |
+|---|---|
 | `emilys` | `emilyspass` |
 
-## Assumptions and trade-offs
+---
 
-- DummyJSON endpoints follow the documented response shapes; its checkout endpoint only simulates order creation.
-- Cart items are persisted locally because server-side carts are not durable.
-- Expired sessions attempt one refresh for concurrent requests; if refresh fails, secure tokens are cleared and the app returns to login.
-- Network and image availability depend on DummyJSON and connectivity; failures remain retryable.
-- English and Hindi cover the main authentication and shopping flows; product names, descriptions, and server-provided review text remain in their source language.
+## 11. Assumptions & Trade-offs
 
-## AI assistance
+### DummyJSON
 
-AI assistance was used during implementation and review. The developer should review, understand, and personalize the submitted code and be ready to explain its behavior.
+DummyJSON is used as the public backend. Its checkout endpoint simulates order creation and does not provide durable server-side order storage.
 
-## Author
+### Local Cart Persistence
 
-Replace this section with your full name, email, and LinkedIn/portfolio link before submitting.
+Cart data is persisted locally because server-side cart operations are simulated and are not durable.
+
+### Authentication
+
+Access and refresh tokens are stored securely using `flutter_secure_storage`.
+
+When an access token expires, the application attempts to refresh it once and retries the original request.
+
+If refresh fails, the secure session is cleared and the user is returned to Login.
+
+### Offline Behaviour
+
+Product data can be cached locally. When network connectivity is unavailable, the application displays an offline indication and can use cached product information where available.
+
+### Localization
+
+English and Hindi are persisted locally for the application's main authentication and shopping flows.
+
+Product names, descriptions and server-provided review text remain in their source language.
+
+### Future Improvements
+
+With additional development time, I would improve:
+
+- Automated test coverage toward 60%+
+- Additional widget and golden tests
+- More comprehensive integration testing
+- More extensive offline synchronization
+- Accessibility testing across devices and font scales
+- Additional UI micro-interactions and animations
+
+---
+
+## 12. Author
+
+### Avinash Garla
+
+**B.Tech — Electronics & Communication Engineering**  
+National Institute of Technology, Hamirpur
+
+📍 Mandi, Himachal Pradesh, India
+
+📧 **Email:** `avinashgarlaa@gmail.com`
+
+🔗 **GitHub:** `https://github.com/<your-username>`
+
+🔗 **LinkedIn:** `https://www.linkedin.com/in/<your-linkedin>`
+
+---
+
+## AI Assistance
+
+AI tools were used during implementation and review for development assistance, debugging, code suggestions and documentation.
+
+All submitted code has been reviewed by the developer, and the developer is responsible for understanding and explaining the implementation.
+
+---
+
+## Final Submission Checklist
+
+- [ ] Public GitHub repository created
+- [ ] Repository named `prosessed-flutter-assignment`
+- [ ] 20+ meaningful Conventional Commits
+- [ ] No build artifacts, secrets or keystores committed
+- [ ] `flutter analyze` reports zero issues
+- [ ] `flutter test` passes
+- [ ] 4+ phone screenshots added
+- [ ] 2+ tablet/landscape screenshots added
+- [ ] Error scenarios tested
+- [ ] 2–4 minute demo video recorded
+- [ ] Release APK built and smoke-tested
+- [ ] APK named `ShopSphere_<FullName>_v1.0.0.apk`
+- [ ] GitHub Release created with tag `v1.0.0`
+- [ ] Google Drive folder contains APK, demo video and screenshots
+- [ ] Google Drive sharing set to **Anyone with the link – Viewer**
+- [ ] All links tested in an incognito/private window
+- [ ] Submission email sent before the deadline
