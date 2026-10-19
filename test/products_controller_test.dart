@@ -8,6 +8,7 @@ import 'package:shopsphere/core/error/result.dart';
 import 'package:shopsphere/features/products/domain/product.dart';
 import 'package:shopsphere/features/products/domain/product_category.dart';
 import 'package:shopsphere/features/products/domain/products_repository.dart';
+import 'package:shopsphere/features/products/presentation/products_controller.dart';
 
 void main() {
   const product = Product(
@@ -55,6 +56,27 @@ void main() {
     final state = container.read(productsProvider);
     expect(state.isInitialLoading, isFalse);
     expect(state.failure, isA<ServerFailure>());
+  });
+
+  test('controller emits loading then successful product states', () async {
+    final repository = _FakeProductsRepository(
+      pageResult: const Success(ProductsPage(products: [product], total: 1)),
+    );
+    final container = ProviderContainer(
+      overrides: [productsRepositoryProvider.overrideWithValue(repository)],
+    );
+    addTearDown(container.dispose);
+    final states = <ProductsState>[];
+    container.listen<ProductsState>(
+      productsProvider,
+      (_, next) => states.add(next),
+      fireImmediately: true,
+    );
+
+    await Future<void>.delayed(Duration.zero);
+
+    expect(states.map((state) => state.isInitialLoading), [true, true, false]);
+    expect(states.last.products, [product]);
   });
 
   test('controller passes selected sorting to the repository', () async {

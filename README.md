@@ -368,12 +368,6 @@ No code generation is required.
 flutter build apk --release
 ```
 
-The final APK should be renamed:
-
-```text
-ShopSphere_<FullName>_v1.0.0.apk
-```
-
 The Android minimum SDK is **26 (Android 8.0)**.
 
 > The current local release configuration uses the debug signing key as a development convenience. A private release keystore should be configured outside source control before distribution.
@@ -402,7 +396,7 @@ coverage/lcov.info
 
 ### Current Test Suite
 
-**33 tests passing**
+**38 tests passing**
 
 The tests cover:
 
@@ -421,15 +415,18 @@ The tests cover:
 - Product sorting
 - Controller loading states
 - Controller failure states
+- Controller loading-to-success state sequence
 - Stale-request handling
+- Theme, language and wishlist persistence
+- Offline product-cache fallback
 - Authentication-header attachment
 - Widget behaviour
 
 ### Coverage
 
 ```text
-414 / 1,722 lines
-24.0% line coverage
+482 / 1,722 lines
+28.0% line coverage
 ```
 
 The optional 60% coverage target has not yet been reached.
