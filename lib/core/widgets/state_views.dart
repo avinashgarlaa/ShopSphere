@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../localization/shop_localizations.dart';
 import '../utils/layout.dart';
 
 class ErrorView extends StatelessWidget {
@@ -15,26 +16,39 @@ class ErrorView extends StatelessWidget {
   final bool compact;
 
   @override
-  Widget build(BuildContext context) => Center(
-    child: Padding(
-      padding: const EdgeInsets.all(24),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(
-            Icons.cloud_off_rounded,
-            size: compact ? 40 : 56,
-            color: Theme.of(context).colorScheme.primary,
-          ),
-          const SizedBox(height: 12),
-          Text(message, textAlign: TextAlign.center),
-          const SizedBox(height: 16),
-          FilledButton.icon(
-            onPressed: onRetry,
-            icon: const Icon(Icons.refresh),
-            label: const Text('Try again'),
-          ),
-        ],
+  Widget build(BuildContext context) => Semantics(
+    liveRegion: true,
+    child: Center(
+      child: Padding(
+        padding: const EdgeInsets.all(24),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ExcludeSemantics(
+              child: Container(
+                width: compact ? 72 : 92,
+                height: compact ? 72 : 92,
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.primaryContainer,
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(
+                  Icons.cloud_off_rounded,
+                  size: compact ? 36 : 44,
+                  color: Theme.of(context).colorScheme.onPrimaryContainer,
+                ),
+              ),
+            ),
+            const SizedBox(height: 12),
+            Text(message, textAlign: TextAlign.center),
+            const SizedBox(height: 16),
+            FilledButton.icon(
+              onPressed: onRetry,
+              icon: const Icon(Icons.refresh),
+              label: Text(ShopLocalizations.of(context).text('retry')),
+            ),
+          ],
+        ),
       ),
     ),
   );
@@ -53,23 +67,40 @@ class EmptyView extends StatelessWidget {
   final Widget? action;
 
   @override
-  Widget build(BuildContext context) => Center(
-    child: Padding(
-      padding: const EdgeInsets.all(28),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(
-            Icons.search_off_rounded,
-            size: 60,
-            color: Theme.of(context).colorScheme.primary,
-          ),
-          const SizedBox(height: 16),
-          Text(title, style: Theme.of(context).textTheme.titleLarge),
-          const SizedBox(height: 6),
-          Text(message, textAlign: TextAlign.center),
-          if (action != null) ...[const SizedBox(height: 16), action!],
-        ],
+  Widget build(BuildContext context) => Semantics(
+    liveRegion: true,
+    child: Center(
+      child: Padding(
+        padding: const EdgeInsets.all(28),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ExcludeSemantics(
+              child: Container(
+                width: 92,
+                height: 92,
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.primaryContainer,
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(
+                  Icons.search_off_rounded,
+                  size: 44,
+                  color: Theme.of(context).colorScheme.onPrimaryContainer,
+                ),
+              ),
+            ),
+            const SizedBox(height: 16),
+            Text(
+              title,
+              style: Theme.of(context).textTheme.titleLarge,
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 6),
+            Text(message, textAlign: TextAlign.center),
+            if (action != null) ...[const SizedBox(height: 16), action!],
+          ],
+        ),
       ),
     ),
   );
@@ -81,21 +112,24 @@ class ProductShimmer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => LayoutBuilder(
-    builder: (context, constraints) => GridView.builder(
-      padding: const EdgeInsets.all(16),
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: LayoutBreakpoints.gridColumns(
-          MediaQuery.sizeOf(context).width,
+    builder: (context, constraints) => Semantics(
+      label: ShopLocalizations.of(context).text('loadingProducts'),
+      child: ExcludeSemantics(
+        child: GridView.builder(
+          padding: const EdgeInsets.all(16),
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: LayoutBreakpoints.gridColumns(constraints.maxWidth),
+            crossAxisSpacing: 14,
+            mainAxisSpacing: 14,
+            childAspectRatio: constraints.maxWidth >= LayoutBreakpoints.expanded
+                ? .72
+                : .62,
+          ),
+          itemCount: count,
+          itemBuilder: (context, _) => _SkeletonCard(
+            color: Theme.of(context).colorScheme.surfaceContainerHighest,
+          ),
         ),
-        crossAxisSpacing: 14,
-        mainAxisSpacing: 14,
-        childAspectRatio: constraints.maxWidth >= LayoutBreakpoints.expanded
-            ? .72
-            : .62,
-      ),
-      itemCount: count,
-      itemBuilder: (context, _) => _SkeletonCard(
-        color: Theme.of(context).colorScheme.surfaceContainerHighest,
       ),
     ),
   );

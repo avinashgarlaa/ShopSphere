@@ -16,7 +16,10 @@ class ProfileScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final profile = ref.watch(profileProvider);
     return profile.when(
-      loading: () => const Center(child: CircularProgressIndicator()),
+      loading: () => Semantics(
+        label: ShopLocalizations.of(context).text('loadingProfile'),
+        child: const Center(child: CircularProgressIndicator()),
+      ),
       error: (_, _) => ErrorView(
         message: ShopLocalizations.of(context).text('profileLoadError'),
         onRetry: () => ref.invalidate(profileProvider),

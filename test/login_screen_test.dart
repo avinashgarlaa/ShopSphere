@@ -13,7 +13,7 @@ import 'package:shopsphere/features/auth/domain/login_use_case.dart';
 import 'package:shopsphere/app.dart';
 
 void main() {
-  Widget buildLogin() => ProviderScope(
+  Widget buildLogin({bool enlargedText = false}) => ProviderScope(
     overrides: [
       sessionStoreProvider.overrideWithValue(_FakeSessionStore()),
       loginUseCaseProvider.overrideWithValue(
@@ -21,6 +21,12 @@ void main() {
       ),
     ],
     child: MaterialApp(
+      builder: (context, child) => MediaQuery(
+        data: MediaQuery.of(
+          context,
+        ).copyWith(textScaler: TextScaler.linear(enlargedText ? 1.3 : 1)),
+        child: child!,
+      ),
       supportedLocales: ShopLocalizations.supportedLocales,
       localizationsDelegates: const [
         ShopLocalizationsDelegate(),
@@ -57,6 +63,22 @@ void main() {
       tester.widget<EditableText>(find.byType(EditableText).at(1)).obscureText,
       isFalse,
     );
+  });
+
+  testWidgets('login remains usable on a compact screen with larger text', (
+    tester,
+  ) async {
+    tester.view
+      ..devicePixelRatio = 1
+      ..physicalSize = const Size(320, 568);
+    addTearDown(tester.view.resetDevicePixelRatio);
+    addTearDown(tester.view.resetPhysicalSize);
+
+    await tester.pumpWidget(buildLogin(enlargedText: true));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Sign in'), findsOneWidget);
+    expect(tester.takeException(), isNull);
   });
 }
 

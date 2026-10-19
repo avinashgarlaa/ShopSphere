@@ -58,40 +58,56 @@ class _ProductsPane extends ConsumerWidget {
       children: [
         if (!expanded)
           Padding(
-            padding: const EdgeInsets.fromLTRB(20, 4, 20, 12),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        strings.text('findFavorite'),
-                        style: Theme.of(context).textTheme.titleLarge,
-                      ),
-                      const SizedBox(height: 3),
-                      Text(
-                        strings.text('thoughtfulFinds'),
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: Theme.of(context).colorScheme.onSurfaceVariant,
+            padding: const EdgeInsets.fromLTRB(16, 4, 16, 12),
+            child: Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.primaryContainer,
+                borderRadius: BorderRadius.circular(22),
+              ),
+              child: Row(
+                children: [
+                  Container(
+                    width: 48,
+                    height: 48,
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.primary,
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: Icon(
+                      Icons.local_mall_rounded,
+                      color: Theme.of(context).colorScheme.onPrimary,
+                    ),
+                  ),
+                  const SizedBox(width: 14),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          strings.text('findFavorite'),
+                          style: Theme.of(context).textTheme.titleLarge
+                              ?.copyWith(
+                                color: Theme.of(
+                                  context,
+                                ).colorScheme.onPrimaryContainer,
+                              ),
                         ),
-                      ),
-                    ],
+                        const SizedBox(height: 3),
+                        Text(
+                          strings.text('thoughtfulFinds'),
+                          style: Theme.of(context).textTheme.bodyMedium
+                              ?.copyWith(
+                                color: Theme.of(
+                                  context,
+                                ).colorScheme.onPrimaryContainer,
+                              ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                Container(
-                  width: 44,
-                  height: 44,
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.primaryContainer,
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: Icon(
-                    Icons.local_mall_outlined,
-                    color: Theme.of(context).colorScheme.onPrimaryContainer,
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         if (isOffline)
@@ -315,7 +331,7 @@ class _ProductResults extends ConsumerWidget {
             padding: const EdgeInsets.all(16),
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: LayoutBreakpoints.gridColumns(
-                MediaQuery.sizeOf(context).width,
+                constraints.maxWidth,
               ),
               crossAxisSpacing: 14,
               mainAxisSpacing: 14,
@@ -377,8 +393,14 @@ class _ProductCard extends ConsumerWidget {
     final scheme = Theme.of(context).colorScheme;
     final isSaved = ref.watch(wishlistProvider).containsKey(product.id);
     return Semantics(
+      container: true,
       button: true,
-      label: '${product.title}, ${formatCurrency(product.salePrice)}',
+      label: [
+        product.title,
+        formatCurrency(product.salePrice),
+        '${product.rating.toStringAsFixed(1)} ${ShopLocalizations.of(context).text('rating')}',
+        if (!product.isInStock) ShopLocalizations.of(context).text('soldOut'),
+      ].join(', '),
       child: Card(
         clipBehavior: Clip.antiAlias,
         margin: EdgeInsets.zero,
@@ -503,10 +525,12 @@ class _ProductCard extends ConsumerWidget {
                 const SizedBox(height: 4),
                 Row(
                   children: [
-                    const Icon(
-                      Icons.star_rounded,
-                      color: Color(0xffd89222),
-                      size: 17,
+                    ExcludeSemantics(
+                      child: Icon(
+                        Icons.star_rounded,
+                        color: Theme.of(context).colorScheme.tertiary,
+                        size: 17,
+                      ),
                     ),
                     const SizedBox(width: 3),
                     Text(
@@ -515,11 +539,15 @@ class _ProductCard extends ConsumerWidget {
                     ),
                     const Spacer(),
                     if (!product.isInStock)
-                      Text(
-                        ShopLocalizations.of(context).text('soldOut'),
-                        style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                          color: scheme.error,
-                          fontWeight: FontWeight.w700,
+                      Flexible(
+                        child: Text(
+                          ShopLocalizations.of(context).text('soldOut'),
+                          textAlign: TextAlign.end,
+                          style: Theme.of(context).textTheme.labelSmall
+                              ?.copyWith(
+                                color: scheme.error,
+                                fontWeight: FontWeight.w700,
+                              ),
                         ),
                       ),
                   ],

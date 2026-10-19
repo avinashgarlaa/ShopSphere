@@ -136,128 +136,193 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
-            padding: const EdgeInsets.all(24),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 28),
             child: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 430),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Container(
-                      width: 68,
-                      height: 68,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        color: scheme.primary,
-                        borderRadius: BorderRadius.circular(22),
-                      ),
-                      child: Icon(
-                        Icons.shopping_bag_rounded,
-                        color: scheme.onPrimary,
-                        size: 34,
-                      ),
-                    ),
-                    const SizedBox(height: 28),
-                    Text(
-                      strings.text('welcome'),
-                      style: Theme.of(context).textTheme.headlineMedium,
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      strings.text('signInIntro'),
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
-                    if (widget.notice != null) ...[
-                      const SizedBox(height: 20),
-                      _MessageCard(
-                        message: widget.notice == 'session_expired'
-                            ? strings.text('sessionExpired')
-                            : widget.notice!,
-                        icon: Icons.info_outline_rounded,
-                      ),
-                    ],
-                    if (_error != null) ...[
-                      const SizedBox(height: 20),
-                      _MessageCard(
-                        message: _error!,
-                        icon: Icons.error_outline_rounded,
-                        isError: true,
-                      ),
-                    ],
-                    const SizedBox(height: 28),
-                    TextFormField(
-                      controller: _username,
-                      textInputAction: TextInputAction.next,
-                      autofillHints: const [AutofillHints.username],
-                      decoration: InputDecoration(
-                        labelText: strings.text('username'),
-                        prefixIcon: const Icon(Icons.person_outline),
-                      ),
-                      validator: (value) {
-                        if (value == null || value.trim().isEmpty) {
-                          return strings.text('enterUsername');
-                        }
-                        if (value.trim().length < 3) {
-                          return strings.text('usernameMin');
-                        }
-                        return null;
-                      },
-                    ),
-                    const SizedBox(height: 16),
-                    TextFormField(
-                      controller: _password,
-                      obscureText: _hidePassword,
-                      textInputAction: TextInputAction.done,
-                      autofillHints: const [AutofillHints.password],
-                      onFieldSubmitted: (_) => _submit(),
-                      decoration: InputDecoration(
-                        labelText: strings.text('password'),
-                        prefixIcon: const Icon(Icons.lock_outline),
-                        suffixIcon: IconButton(
-                          tooltip: _hidePassword
-                              ? strings.text('showPassword')
-                              : strings.text('hidePassword'),
-                          onPressed: () =>
-                              setState(() => _hidePassword = !_hidePassword),
-                          icon: Icon(
-                            _hidePassword
-                                ? Icons.visibility_outlined
-                                : Icons.visibility_off_outlined,
+              constraints: const BoxConstraints(maxWidth: 480),
+              child: Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(24),
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Row(
+                          children: [
+                            Container(
+                              width: 58,
+                              height: 58,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                color: scheme.primaryContainer,
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              child: Icon(
+                                Icons.shopping_bag_rounded,
+                                color: scheme.onPrimaryContainer,
+                                size: 30,
+                              ),
+                            ),
+                            const SizedBox(width: 14),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'SHOPSPHERE',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .labelLarge
+                                        ?.copyWith(
+                                          color: scheme.primary,
+                                          letterSpacing: 1.6,
+                                          fontWeight: FontWeight.w800,
+                                        ),
+                                  ),
+                                  const SizedBox(height: 3),
+                                  Text(
+                                    strings.text('welcome'),
+                                    style: Theme.of(
+                                      context,
+                                    ).textTheme.headlineSmall,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 12),
+                        Text(
+                          strings.text('signInIntro'),
+                          style: Theme.of(context).textTheme.bodyLarge
+                              ?.copyWith(color: scheme.onSurfaceVariant),
+                        ),
+                        if (widget.notice != null) ...[
+                          const SizedBox(height: 20),
+                          _MessageCard(
+                            message: widget.notice == 'session_expired'
+                                ? strings.text('sessionExpired')
+                                : widget.notice!,
+                            icon: Icons.info_outline_rounded,
+                          ),
+                        ],
+                        if (_error != null) ...[
+                          const SizedBox(height: 20),
+                          _MessageCard(
+                            message: _error!,
+                            icon: Icons.error_outline_rounded,
+                            isError: true,
+                          ),
+                        ],
+                        const SizedBox(height: 28),
+                        TextFormField(
+                          controller: _username,
+                          textInputAction: TextInputAction.next,
+                          autofillHints: const [AutofillHints.username],
+                          decoration: InputDecoration(
+                            labelText: strings.text('username'),
+                            prefixIcon: const Icon(Icons.person_outline),
+                          ),
+                          validator: (value) {
+                            if (value == null || value.trim().isEmpty) {
+                              return strings.text('enterUsername');
+                            }
+                            if (value.trim().length < 3) {
+                              return strings.text('usernameMin');
+                            }
+                            return null;
+                          },
+                        ),
+                        const SizedBox(height: 16),
+                        TextFormField(
+                          controller: _password,
+                          obscureText: _hidePassword,
+                          textInputAction: TextInputAction.done,
+                          autofillHints: const [AutofillHints.password],
+                          onFieldSubmitted: (_) => _submit(),
+                          decoration: InputDecoration(
+                            labelText: strings.text('password'),
+                            prefixIcon: const Icon(Icons.lock_outline),
+                            suffixIcon: IconButton(
+                              tooltip: _hidePassword
+                                  ? strings.text('showPassword')
+                                  : strings.text('hidePassword'),
+                              onPressed: () => setState(
+                                () => _hidePassword = !_hidePassword,
+                              ),
+                              icon: Icon(
+                                _hidePassword
+                                    ? Icons.visibility_outlined
+                                    : Icons.visibility_off_outlined,
+                              ),
+                            ),
+                          ),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return strings.text('enterPassword');
+                            }
+                            if (value.length < 6) {
+                              return strings.text('passwordMin');
+                            }
+                            return null;
+                          },
+                        ),
+                        const SizedBox(height: 24),
+                        Semantics(
+                          liveRegion: true,
+                          label: _submitting ? strings.text('signingIn') : null,
+                          child: FilledButton(
+                            onPressed: _submitting ? null : _submit,
+                            style: FilledButton.styleFrom(
+                              minimumSize: const Size.fromHeight(54),
+                            ),
+                            child: _submitting
+                                ? const SizedBox(
+                                    width: 22,
+                                    height: 22,
+                                    child: CircularProgressIndicator(
+                                      strokeWidth: 2,
+                                    ),
+                                  )
+                                : Text(strings.text('signIn')),
                           ),
                         ),
-                      ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return strings.text('enterPassword');
-                        }
-                        if (value.length < 6) {
-                          return strings.text('passwordMin');
-                        }
-                        return null;
-                      },
+                        const SizedBox(height: 18),
+                        DecoratedBox(
+                          decoration: BoxDecoration(
+                            color: scheme.surfaceContainerLow,
+                            borderRadius: BorderRadius.circular(14),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 14,
+                              vertical: 12,
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.lock_open_rounded,
+                                  size: 16,
+                                  color: scheme.primary,
+                                ),
+                                const SizedBox(width: 8),
+                                Flexible(
+                                  child: Text(
+                                    strings.text('demoCredentials'),
+                                    textAlign: TextAlign.center,
+                                    style: Theme.of(
+                                      context,
+                                    ).textTheme.bodySmall,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                    const SizedBox(height: 24),
-                    FilledButton(
-                      onPressed: _submitting ? null : _submit,
-                      style: FilledButton.styleFrom(
-                        minimumSize: const Size.fromHeight(54),
-                      ),
-                      child: _submitting
-                          ? const SizedBox(
-                              width: 22,
-                              height: 22,
-                              child: CircularProgressIndicator(strokeWidth: 2),
-                            )
-                          : Text(strings.text('signIn')),
-                    ),
-                    const SizedBox(height: 18),
-                    Text(
-                      strings.text('demoCredentials'),
-                      textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.bodySmall,
-                    ),
-                  ],
+                  ),
                 ),
               ),
             ),
@@ -282,20 +347,26 @@ class _MessageCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
-    final color = isError ? scheme.error : scheme.primary;
+    final color = isError ? scheme.onErrorContainer : scheme.onPrimaryContainer;
+    final background = isError
+        ? scheme.errorContainer
+        : scheme.primaryContainer;
     return Semantics(
       liveRegion: true,
       child: Container(
         padding: const EdgeInsets.all(14),
         decoration: BoxDecoration(
-          color: color.withValues(alpha: .1),
+          color: background,
           borderRadius: BorderRadius.circular(14),
+          border: Border.all(color: color.withValues(alpha: .2)),
         ),
         child: Row(
           children: [
-            Icon(icon, color: color),
+            ExcludeSemantics(child: Icon(icon, color: color)),
             const SizedBox(width: 10),
-            Expanded(child: Text(message)),
+            Expanded(
+              child: Text(message, style: TextStyle(color: color)),
+            ),
           ],
         ),
       ),

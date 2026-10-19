@@ -1,18 +1,36 @@
 import 'package:flutter/material.dart';
 
 class AppTheme {
-  static const seed = Color(0xff315c4c);
+  static const seed = Color(0xff28594d);
+  static const _warmAccent = Color(0xff985327);
 
   static ThemeData light() => _theme(Brightness.light);
   static ThemeData dark() => _theme(Brightness.dark);
 
   static ThemeData _theme(Brightness brightness) {
-    final scheme = ColorScheme.fromSeed(
+    final baseScheme = ColorScheme.fromSeed(
       seedColor: seed,
       brightness: brightness,
       surface: brightness == Brightness.light
-          ? const Color(0xfffbfaf6)
+          ? const Color(0xfffffdf8)
           : const Color(0xff171d1a),
+    );
+    final scheme = baseScheme.copyWith(
+      primaryContainer: brightness == Brightness.light
+          ? const Color(0xffdce9df)
+          : const Color(0xff27443c),
+      onPrimaryContainer: brightness == Brightness.light
+          ? const Color(0xff173b32)
+          : const Color(0xffe1f2e8),
+      tertiary: brightness == Brightness.light
+          ? _warmAccent
+          : const Color(0xffffc28f),
+      tertiaryContainer: brightness == Brightness.light
+          ? const Color(0xfff5dfcc)
+          : const Color(0xff5c3d27),
+      onTertiaryContainer: brightness == Brightness.light
+          ? const Color(0xff42240f)
+          : const Color(0xffffe2c9),
     );
     final textTheme = Typography.material2021().black.apply(
       bodyColor: scheme.onSurface,
@@ -22,8 +40,10 @@ class AppTheme {
       useMaterial3: true,
       colorScheme: scheme,
       scaffoldBackgroundColor: brightness == Brightness.light
-          ? const Color(0xfff6f5f0)
+          ? const Color(0xfff5f3ec)
           : null,
+      visualDensity: VisualDensity.standard,
+      materialTapTargetSize: MaterialTapTargetSize.padded,
       textTheme: textTheme.copyWith(
         headlineMedium: textTheme.headlineMedium?.copyWith(
           fontWeight: FontWeight.w700,
@@ -43,8 +63,11 @@ class AppTheme {
       ),
       appBarTheme: AppBarTheme(
         centerTitle: false,
-        backgroundColor: Colors.transparent,
+        backgroundColor: brightness == Brightness.light
+            ? const Color(0xfff5f3ec)
+            : scheme.surface,
         foregroundColor: scheme.onSurface,
+        surfaceTintColor: Colors.transparent,
         elevation: 0,
         scrolledUnderElevation: 0,
         titleTextStyle: textTheme.titleLarge?.copyWith(
@@ -57,8 +80,8 @@ class AppTheme {
         color: scheme.surface,
         clipBehavior: Clip.antiAlias,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(22),
-          side: BorderSide(color: scheme.outlineVariant.withValues(alpha: .42)),
+          borderRadius: BorderRadius.circular(24),
+          side: BorderSide(color: scheme.outlineVariant.withValues(alpha: .55)),
         ),
       ),
       inputDecorationTheme: InputDecorationTheme(
@@ -78,8 +101,9 @@ class AppTheme {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(18),
-          borderSide: BorderSide(color: scheme.primary, width: 1.5),
+          borderSide: BorderSide(color: scheme.primary, width: 2),
         ),
+        errorMaxLines: 2,
       ),
       filledButtonTheme: FilledButtonThemeData(
         style: FilledButton.styleFrom(
@@ -102,6 +126,12 @@ class AppTheme {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
         side: BorderSide(color: scheme.outlineVariant.withValues(alpha: .6)),
         labelStyle: TextStyle(color: scheme.onSurface),
+        showCheckmark: false,
+      ),
+      dividerTheme: DividerThemeData(
+        color: scheme.outlineVariant.withValues(alpha: .65),
+        thickness: 1,
+        space: 1,
       ),
       navigationBarTheme: NavigationBarThemeData(
         height: 72,
@@ -120,9 +150,15 @@ class AppTheme {
         indicatorColor: scheme.primaryContainer,
         labelType: NavigationRailLabelType.all,
       ),
+      progressIndicatorTheme: ProgressIndicatorThemeData(
+        color: scheme.primary,
+        linearTrackColor: scheme.primaryContainer,
+        circularTrackColor: scheme.surfaceContainerHighest,
+      ),
       snackBarTheme: SnackBarThemeData(
         behavior: SnackBarBehavior.floating,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        insetPadding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
       ),
     );
   }

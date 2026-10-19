@@ -23,7 +23,10 @@ class ProductDetailScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final details = ref.watch(productDetailsProvider(productId));
     final content = details.when(
-      loading: () => const Center(child: CircularProgressIndicator()),
+      loading: () => Semantics(
+        label: ShopLocalizations.of(context).text('loadingProduct'),
+        child: const Center(child: CircularProgressIndicator()),
+      ),
       error: (_, _) => ErrorView(
         message: ShopLocalizations.of(context).text('productLoadError'),
         onRetry: () => ref.invalidate(productDetailsProvider(productId)),
@@ -111,9 +114,9 @@ class _ProductDetailBodyState extends ConsumerState<ProductDetailBody> {
                             placeholder: (_, _) => const Center(
                               child: CircularProgressIndicator(),
                             ),
-                            errorWidget: (_, _, _) => const ColoredBox(
-                              color: Color(0xffeeeef5),
-                              child: Center(
+                            errorWidget: (_, _, _) => ColoredBox(
+                              color: scheme.surfaceContainerHighest,
+                              child: const Center(
                                 child: Icon(
                                   Icons.image_not_supported_outlined,
                                   size: 40,
@@ -131,29 +134,67 @@ class _ProductDetailBodyState extends ConsumerState<ProductDetailBody> {
                           bottom: 12,
                           left: 0,
                           right: 0,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              for (
-                                var index = 0;
-                                index < images.length;
-                                index++
-                              )
-                                AnimatedContainer(
-                                  duration: const Duration(milliseconds: 180),
-                                  margin: const EdgeInsets.symmetric(
-                                    horizontal: 3,
+                          child: ExcludeSemantics(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                for (
+                                  var index = 0;
+                                  index < images.length;
+                                  index++
+                                )
+                                  AnimatedContainer(
+                                    duration: const Duration(milliseconds: 180),
+                                    margin: const EdgeInsets.symmetric(
+                                      horizontal: 3,
+                                    ),
+                                    width: index == _imageIndex ? 20 : 7,
+                                    height: 7,
+                                    decoration: BoxDecoration(
+                                      color: index == _imageIndex
+                                          ? scheme.primary
+                                          : scheme.surface,
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
                                   ),
-                                  width: index == _imageIndex ? 20 : 7,
-                                  height: 7,
-                                  decoration: BoxDecoration(
-                                    color: index == _imageIndex
-                                        ? scheme.primary
-                                        : scheme.surface,
-                                    borderRadius: BorderRadius.circular(10),
+                              ],
+                            ),
+                          ),
+                        ),
+                      if (images.length > 1)
+                        Positioned(
+                          right: 12,
+                          bottom: 12,
+                          child: Semantics(
+                            liveRegion: true,
+                            label: strings
+                                .text('imagePage')
+                                .replaceAll('{current}', '${_imageIndex + 1}')
+                                .replaceAll('{total}', '${images.length}'),
+                            child: ExcludeSemantics(
+                              child: DecoratedBox(
+                                decoration: BoxDecoration(
+                                  color: scheme.scrim.withValues(alpha: .72),
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 10,
+                                    vertical: 6,
+                                  ),
+                                  child: Text(
+                                    '${_imageIndex + 1} / ${images.length}',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .labelMedium
+                                        ?.copyWith(
+                                          color: scheme.onInverseSurface,
+                                          fontWeight: FontWeight.w700,
+                                        ),
                                   ),
                                 ),
-                            ],
+                              ),
+                            ),
                           ),
                         ),
                     ],
@@ -214,7 +255,10 @@ class _ProductDetailBodyState extends ConsumerState<ProductDetailBody> {
                 ),
               ],
               const SizedBox(height: 12),
-              Row(
+              Wrap(
+                crossAxisAlignment: WrapCrossAlignment.center,
+                spacing: 10,
+                runSpacing: 6,
                 children: [
                   Text(
                     formatCurrency(product.salePrice),
@@ -222,18 +266,21 @@ class _ProductDetailBodyState extends ConsumerState<ProductDetailBody> {
                       context,
                     ).textTheme.headlineSmall?.copyWith(color: scheme.primary),
                   ),
-                  const SizedBox(width: 10),
-                  Text(
-                    formatCurrency(product.price),
-                    style: const TextStyle(
-                      decoration: TextDecoration.lineThrough,
+                  if (product.discountPercentage > 0)
+                    Text(
+                      formatCurrency(product.price),
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: scheme.onSurfaceVariant,
+                        decoration: TextDecoration.lineThrough,
+                      ),
                     ),
-                  ),
-                  const SizedBox(width: 10),
-                  Text(
-                    '${product.discountPercentage.toStringAsFixed(0)}% ${strings.text('discountOff')}',
-                    style: TextStyle(color: scheme.tertiary),
-                  ),
+                  if (product.discountPercentage > 0)
+                    Chip(
+                      visualDensity: VisualDensity.compact,
+                      label: Text(
+                        '${product.discountPercentage.toStringAsFixed(0)}% ${strings.text('discountOff')}',
+                      ),
+                    ),
                 ],
               ),
               const SizedBox(height: 10),
@@ -247,6 +294,11 @@ class _ProductDetailBodyState extends ConsumerState<ProductDetailBody> {
                 ],
               ),
               const SizedBox(height: 20),
+              Text(
+                strings.text('description'),
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
+              const SizedBox(height: 8),
               Text(
                 product.description,
                 style: Theme.of(context).textTheme.bodyLarge,

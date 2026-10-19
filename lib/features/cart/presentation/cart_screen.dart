@@ -17,7 +17,12 @@ class CartScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final strings = ShopLocalizations.of(context);
     final cart = ref.watch(cartProvider);
-    if (!cart.isReady) return const Center(child: CircularProgressIndicator());
+    if (!cart.isReady) {
+      return Semantics(
+        label: strings.text('loadingCart'),
+        child: const Center(child: CircularProgressIndicator()),
+      );
+    }
     if (cart.items.isEmpty) {
       return EmptyView(
         title: strings.text('emptyCart'),
@@ -30,7 +35,7 @@ class CartScreen extends ConsumerWidget {
       );
     }
     final wide = MediaQuery.sizeOf(context).width >= 800;
-    final items = _CartItems(items: cart.items);
+    final items = _CartItems(items: cart.items, shrinkWrap: !wide);
     final summary = _CheckoutSummary(cart: cart);
     return wide
         ? Row(
@@ -45,22 +50,25 @@ class CartScreen extends ConsumerWidget {
               ),
             ],
           )
-        : Column(
-            children: [
-              Expanded(child: items),
-              Padding(padding: const EdgeInsets.all(16), child: summary),
-            ],
+        : SingleChildScrollView(
+            padding: const EdgeInsets.fromLTRB(12, 4, 12, 20),
+            child: Column(
+              children: [items, const SizedBox(height: 12), summary],
+            ),
           );
   }
 }
 
 class _CartItems extends ConsumerWidget {
-  const _CartItems({required this.items});
+  const _CartItems({required this.items, this.shrinkWrap = false});
   final List<CartItem> items;
+  final bool shrinkWrap;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) => ListView.separated(
-    padding: const EdgeInsets.all(16),
+    shrinkWrap: shrinkWrap,
+    physics: shrinkWrap ? const NeverScrollableScrollPhysics() : null,
+    padding: shrinkWrap ? EdgeInsets.zero : const EdgeInsets.all(16),
     itemCount: items.length,
     separatorBuilder: (_, _) => const SizedBox(height: 12),
     itemBuilder: (context, index) {
