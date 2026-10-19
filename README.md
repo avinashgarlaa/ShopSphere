@@ -50,25 +50,37 @@ ShopSphere uses DummyJSON as the public backend. No custom backend is required.
 
 ## 2. Screenshots
 
-Add the required screenshots before submission.
-
 ### Phone Screenshots
 
-| Login | Product Catalogue |
+| Splash | Login |
 |---|---|
-| `screenshots/phone_login.png` | `screenshots/phone_catalogue.png` |
+| <img src="screenshots/splash.png" alt="ShopSphere splash screen" width="220"> | <img src="screenshots/login.png" alt="ShopSphere login screen" width="220"> |
 
-| Product Details | Cart |
+| Product Catalogue | Product Details |
 |---|---|
-| `screenshots/phone_details.png` | `screenshots/phone_cart.png` |
+| <img src="screenshots/catalogue.png" alt="ShopSphere product catalogue" width="220"> | <img src="screenshots/product-details.png" alt="ShopSphere product details" width="220"> |
+
+| Product Details & Reviews | Cart |
+|---|---|
+| <img src="screenshots/product-details-reviews.png" alt="ShopSphere product details and customer reviews" width="220"> | <img src="screenshots/cart.png" alt="ShopSphere cart and order summary" width="220"> |
+
+| Cart with Added Confirmation | Profile |
+|---|---|
+| <img src="screenshots/cart-item-added.png" alt="ShopSphere cart after adding an item" width="220"> | <img src="screenshots/profile.png" alt="ShopSphere profile screen" width="220"> |
 
 ### Tablet / Landscape Screenshots
 
-| Master-Detail | Expanded Catalogue |
+| Splash | Login |
 |---|---|
-| `screenshots/tablet_master_detail.png` | `screenshots/tablet_landscape.png` |
+| <img src="screenshots/tablet-splash.png" alt="ShopSphere splash screen on tablet" width="320"> | <img src="screenshots/tablet-login.png" alt="ShopSphere login screen on tablet" width="320"> |
 
-The final submission should contain at least **4 phone screenshots and 2 tablet/landscape screenshots**.
+| Product Catalogue | Product Details |
+|---|---|
+| <img src="screenshots/tablet-catalogue.png" alt="ShopSphere tablet product catalogue with navigation rail" width="320"> | <img src="screenshots/tablet-product-details.png" alt="ShopSphere product details on tablet" width="320"> |
+
+| Cart | Profile |
+|---|---|
+| <img src="screenshots/tablet-cart-empty.png" alt="ShopSphere empty cart on tablet" width="320"> | <img src="screenshots/tablet-profile.png" alt="ShopSphere profile on tablet" width="320"> |
 
 ---
 
