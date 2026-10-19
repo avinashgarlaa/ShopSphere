@@ -6,7 +6,7 @@ The app focuses on responsive Material 3 UI, feature-first architecture, Riverpo
 
 **Android Release APK:** `build/app/outputs/flutter-apk/app-release.apk`  
 **Demo Video:** Add Google Drive link before submission  
-**GitHub Repository:** Add public repository link before submission
+**GitHub Repository:** [avinashgarlaa/ShopSphere](https://github.com/avinashgarlaa/ShopSphere)
 
 ---
 
@@ -331,9 +331,9 @@ Network-driven screens provide loading, success, empty and error states with ret
 ### Clone the Repository
 
 ```bash
-git clone https://github.com/<username>/prosessed-flutter-assignment.git
+git clone https://github.com/avinashgarlaa/ShopSphere.git
 
-cd prosessed-flutter-assignment
+cd ShopSphere
 ```
 
 ### Install Dependencies
@@ -509,7 +509,7 @@ National Institute of Technology, Hamirpur
 
 📧 **Email:** `avinashgarlaa@gmail.com`
 
-🔗 **GitHub:** `https://github.com/<your-username>`
+🔗 **GitHub:** [github.com/avinashgarlaa](https://github.com/avinashgarlaa)
 
 🔗 **LinkedIn:** `https://www.linkedin.com/in/<your-linkedin>`
 
@@ -526,7 +526,7 @@ All submitted code has been reviewed by the developer, and the developer is resp
 ## Final Submission Checklist
 
 - [ ] Public GitHub repository created
-- [ ] Repository named `prosessed-flutter-assignment`
+- [ ] Repository named `ShopSphere`
 - [ ] 20+ meaningful Conventional Commits
 - [ ] No build artifacts, secrets or keystores committed
 - [ ] `flutter analyze` reports zero issues
