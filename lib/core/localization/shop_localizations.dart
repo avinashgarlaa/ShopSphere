@@ -1,0 +1,213 @@
+import 'package:flutter/foundation.dart';
+import 'package:flutter/widgets.dart';
+
+class ShopLocalizations {
+  const ShopLocalizations(this.locale);
+
+  final Locale locale;
+
+  static const supportedLocales = [Locale('en'), Locale('hi')];
+
+  static ShopLocalizations of(BuildContext context) =>
+      Localizations.of<ShopLocalizations>(context, ShopLocalizations)!;
+
+  String text(String key) =>
+      (locale.languageCode == 'hi' ? _hindi[key] : null) ??
+      _english[key] ??
+      key;
+
+  static const _english = <String, String>{
+    'discover': 'Discover',
+    'cart': 'Cart',
+    'profile': 'Profile',
+    'welcome': 'Welcome back',
+    'signInIntro': 'Sign in to discover your next favorite thing.',
+    'username': 'Username',
+    'password': 'Password',
+    'signIn': 'Sign in',
+    'enterUsername': 'Enter your username.',
+    'usernameMin': 'Username must be at least 3 characters.',
+    'enterPassword': 'Enter your password.',
+    'passwordMin': 'Password must be at least 6 characters.',
+    'showPassword': 'Show password',
+    'hidePassword': 'Hide password',
+    'demoCredentials': 'Demo credentials are filled in for you.',
+    'findFavorite': 'Find your next favorite',
+    'thoughtfulFinds': 'Thoughtful finds for everyday living.',
+    'searchProducts': 'Search products',
+    'sortProducts': 'Sort products',
+    'all': 'All',
+    'categoriesRetry': 'Categories unavailable · Retry',
+    'offlineBanner':
+        'You are offline. Showing your last saved product results.',
+    'retry': 'Retry',
+    'showProducts': 'Show all products',
+    'showWishlist': 'Show wishlist',
+    'noProducts': 'No products found',
+    'noProductsHint': 'Try another search or browse a different category.',
+    'wishlistEmpty': 'Your wishlist is empty',
+    'wishlistHint': 'Save products with the heart button to find them here.',
+    'browseProducts': 'Browse products',
+    'tryAgain': 'Try again',
+    'loadMoreRetry': 'Could not load more. Retry',
+    'soldOut': 'Sold out',
+    'productDetails': 'Product details',
+    'addedToCart': 'added to your cart',
+    'inStock': 'in stock',
+    'outOfStock': 'Out of stock',
+    'discountOff': 'off',
+    'rating': 'rating',
+    'quantity': 'Quantity',
+    'decreaseQuantity': 'Decrease quantity',
+    'increaseQuantity': 'Increase quantity',
+    'addToCart': 'Add to cart',
+    'reviews': 'Customer reviews',
+    'noReviews': 'No reviews yet.',
+    'removeWishlist': 'Remove from wishlist',
+    'saveWishlist': 'Save to wishlist',
+    'emptyCart': 'Your cart is empty',
+    'emptyCartHint':
+        'Add something you love and it will be waiting for you here.',
+    'exploreProducts': 'Explore products',
+    'removeItem': 'Remove item',
+    'orderSummary': 'Order summary',
+    'subtotal': 'Subtotal',
+    'items': 'items',
+    'discounts': 'Product discounts',
+    'grandTotal': 'Grand total',
+    'placingOrder': 'Placing order…',
+    'placeOrder': 'Place order',
+    'orderConfirmed': 'Order confirmed',
+    'orderPlaced': 'Order placed!',
+    'orderThanks':
+        'Your order has been confirmed. Thanks for shopping with ShopSphere.',
+    'continueShopping': 'Continue shopping',
+    'profileMember': 'ShopSphere member',
+    'profileLoadError': 'We could not load your profile.',
+    'email': 'Email',
+    'phone': 'Phone',
+    'notProvided': 'Not provided',
+    'logout': 'Log out',
+    'sessionExpired': 'Your session expired. Please sign in again.',
+    'language': 'Language',
+    'english': 'English',
+    'hindi': 'हिन्दी',
+    'themeToggle': 'Toggle theme',
+    'cartButton': 'Cart, {count} items',
+    'featured': 'Featured',
+    'priceLowHigh': 'Price: low to high',
+    'priceHighLow': 'Price: high to low',
+    'topRated': 'Top rated',
+    'titleAZ': 'Title: A to Z',
+    'selectProduct': 'Select a product',
+    'detailHint': 'Product details will appear here.',
+    'productLoadError': 'We could not load that product.',
+    'quantityValue': 'Quantity {count}',
+    'discountBadge': '{amount}% OFF',
+  };
+
+  static const _hindi = <String, String>{
+    'discover': 'खोजें',
+    'cart': 'कार्ट',
+    'profile': 'प्रोफ़ाइल',
+    'welcome': 'वापसी पर स्वागत है',
+    'signInIntro': 'अपनी पसंदीदा चीज़ें खोजने के लिए साइन इन करें।',
+    'username': 'उपयोगकर्ता नाम',
+    'password': 'पासवर्ड',
+    'signIn': 'साइन इन',
+    'enterUsername': 'अपना उपयोगकर्ता नाम दर्ज करें।',
+    'usernameMin': 'उपयोगकर्ता नाम कम से कम 3 अक्षरों का होना चाहिए।',
+    'enterPassword': 'अपना पासवर्ड दर्ज करें।',
+    'passwordMin': 'पासवर्ड कम से कम 6 अक्षरों का होना चाहिए।',
+    'showPassword': 'पासवर्ड दिखाएँ',
+    'hidePassword': 'पासवर्ड छिपाएँ',
+    'demoCredentials': 'डेमो लॉगिन विवरण पहले से भरे हैं।',
+    'findFavorite': 'अपनी अगली पसंद खोजें',
+    'thoughtfulFinds': 'रोज़मर्रा के लिए खास चीज़ें।',
+    'searchProducts': 'उत्पाद खोजें',
+    'sortProducts': 'उत्पाद क्रमबद्ध करें',
+    'all': 'सभी',
+    'categoriesRetry': 'श्रेणियाँ उपलब्ध नहीं · फिर कोशिश करें',
+    'offlineBanner': 'आप ऑफ़लाइन हैं। पिछली सहेजी गई खोज दिखाई जा रही है।',
+    'retry': 'फिर कोशिश करें',
+    'showProducts': 'सभी उत्पाद दिखाएँ',
+    'showWishlist': 'पसंदीदा दिखाएँ',
+    'noProducts': 'कोई उत्पाद नहीं मिला',
+    'noProductsHint': 'दूसरी खोज करें या दूसरी श्रेणी चुनें।',
+    'wishlistEmpty': 'पसंदीदा सूची खाली है',
+    'wishlistHint': 'उत्पादों को यहाँ सहेजने के लिए दिल के बटन पर टैप करें।',
+    'browseProducts': 'उत्पाद देखें',
+    'tryAgain': 'फिर कोशिश करें',
+    'loadMoreRetry': 'और उत्पाद लोड नहीं हुए। फिर कोशिश करें',
+    'soldOut': 'स्टॉक खत्म',
+    'productDetails': 'उत्पाद विवरण',
+    'addedToCart': 'आपके कार्ट में जोड़ा गया',
+    'inStock': 'स्टॉक में',
+    'outOfStock': 'स्टॉक में नहीं',
+    'discountOff': 'छूट',
+    'rating': 'रेटिंग',
+    'quantity': 'मात्रा',
+    'decreaseQuantity': 'मात्रा घटाएँ',
+    'increaseQuantity': 'मात्रा बढ़ाएँ',
+    'addToCart': 'कार्ट में जोड़ें',
+    'reviews': 'ग्राहक समीक्षाएँ',
+    'noReviews': 'अभी कोई समीक्षा नहीं।',
+    'removeWishlist': 'पसंदीदा से हटाएँ',
+    'saveWishlist': 'पसंदीदा में सहेजें',
+    'emptyCart': 'आपका कार्ट खाली है',
+    'emptyCartHint': 'पसंदीदा चीज़ें जोड़ें, वे यहाँ मिलेंगी।',
+    'exploreProducts': 'उत्पाद देखें',
+    'removeItem': 'आइटम हटाएँ',
+    'orderSummary': 'ऑर्डर सारांश',
+    'subtotal': 'उप-योग',
+    'items': 'आइटम',
+    'discounts': 'उत्पाद छूट',
+    'grandTotal': 'कुल योग',
+    'placingOrder': 'ऑर्डर दिया जा रहा है…',
+    'placeOrder': 'ऑर्डर करें',
+    'orderConfirmed': 'ऑर्डर की पुष्टि',
+    'orderPlaced': 'ऑर्डर हो गया!',
+    'orderThanks':
+        'आपका ऑर्डर कन्फ़र्म हो गया है। ShopSphere से खरीदारी के लिए धन्यवाद।',
+    'continueShopping': 'खरीदारी जारी रखें',
+    'profileMember': 'ShopSphere सदस्य',
+    'profileLoadError': 'प्रोफ़ाइल लोड नहीं हो सकी।',
+    'email': 'ईमेल',
+    'phone': 'फ़ोन',
+    'notProvided': 'उपलब्ध नहीं',
+    'logout': 'लॉग आउट',
+    'sessionExpired': 'आपका सत्र समाप्त हो गया। कृपया फिर साइन इन करें।',
+    'language': 'भाषा',
+    'english': 'English',
+    'hindi': 'हिन्दी',
+    'themeToggle': 'थीम बदलें',
+    'cartButton': 'कार्ट, {count} आइटम',
+    'featured': 'चुनिंदा',
+    'priceLowHigh': 'कीमत: कम से अधिक',
+    'priceHighLow': 'कीमत: अधिक से कम',
+    'topRated': 'सबसे अच्छी रेटिंग',
+    'titleAZ': 'शीर्षक: अ से ज्ञ',
+    'selectProduct': 'उत्पाद चुनें',
+    'detailHint': 'उत्पाद का विवरण यहाँ दिखाई देगा।',
+    'productLoadError': 'उत्पाद लोड नहीं हो सका।',
+    'quantityValue': 'मात्रा {count}',
+    'discountBadge': '{amount}% छूट',
+  };
+}
+
+class ShopLocalizationsDelegate
+    extends LocalizationsDelegate<ShopLocalizations> {
+  const ShopLocalizationsDelegate();
+
+  @override
+  bool isSupported(Locale locale) => ShopLocalizations.supportedLocales.any(
+    (supported) => supported.languageCode == locale.languageCode,
+  );
+
+  @override
+  Future<ShopLocalizations> load(Locale locale) =>
+      SynchronousFuture(ShopLocalizations(locale));
+
+  @override
+  bool shouldReload(ShopLocalizationsDelegate old) => false;
+}
