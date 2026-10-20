@@ -138,10 +138,11 @@ class _SplashScreenState extends State<SplashScreen>
               ),
             ],
           ),
-          child: Icon(
-            Icons.local_mall_rounded,
-            color: scheme.onPrimary,
-            size: 48,
+          child: Image.asset(
+            'assets/logo/shopsphere_logo.png',
+            width: 64,
+            height: 64,
+            fit: BoxFit.contain,
           ),
         ),
         const SizedBox(height: 28),
@@ -304,10 +305,11 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                 color: scheme.primaryContainer,
                                 borderRadius: BorderRadius.circular(20),
                               ),
-                              child: Icon(
-                                Icons.shopping_bag_rounded,
-                                color: scheme.onPrimaryContainer,
-                                size: 30,
+                              child: Image.asset(
+                                'assets/logo/shopsphere_logo.png',
+                                width: 36,
+                                height: 36,
+                                fit: BoxFit.contain,
                               ),
                             ),
                             const SizedBox(width: 14),

@@ -6,7 +6,7 @@ The app focuses on responsive Material 3 UI, feature-first architecture, Riverpo
 
 **Android Release APK:** `build/app/outputs/flutter-apk/app-release.apk`  
 **Demo Video:** Add Google Drive link before submission  
-**GitHub Repository:** [avinashgarlaa/ShopSphere](https://github.com/avinashgarlaa/ShopSphere)
+**GitHub Repository:** [avinashgarlaa/prosessed-flutter-assignment](https://github.com/avinashgarlaa/prosessed-flutter-assignment)
 
 ---
 
@@ -133,9 +133,6 @@ ShopSphere uses DummyJSON as the public backend. No custom backend is required.
 - [x] Persisted English/Hindi selection
 - [x] Widget test
 - [x] GitHub Actions checks
-- [ ] Device/emulator screenshots
-- [ ] Error-scenario recording
-- [ ] Final release APK upload
 
 ---
 
@@ -331,7 +328,7 @@ Network-driven screens provide loading, success, empty and error states with ret
 ### Clone the Repository
 
 ```bash
-git clone https://github.com/avinashgarlaa/ShopSphere.git
+git clone https://github.com/avinashgarlaa/prosessed-flutter-assignment
 
 cd ShopSphere
 ```
@@ -509,3 +506,13 @@ National Institute of Technology, Hamirpur
 🔗 **GitHub:** [github.com/avinashgarlaa](https://github.com/avinashgarlaa)
 
 🔗 **LinkedIn:** [linkedin.com/in/avinash-garla-35b1b42a0](https://www.linkedin.com/in/avinash-garla-35b1b42a0)
+
+## AI Usage
+
+AI assistants were used as a development aid during this project, primarily for:
+- Clarifying Flutter and Dart concepts and debugging issues.
+- Reviewing implementation approaches and suggesting improvements.
+- Assisting with test cases, error handling, and code structure.
+- Improving documentation and README wording.
+
+All generated suggestions were reviewed, adapted, tested, and integrated manually. I understand the code submitted in this repository and can explain the implementation and design decisions.
