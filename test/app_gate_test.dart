@@ -13,9 +13,11 @@ import 'package:shopsphere/features/auth/domain/auth_repository.dart';
 import 'package:shopsphere/features/auth/domain/login_use_case.dart';
 
 void main() {
-  Widget buildApp() => ProviderScope(
+  Widget buildApp([SessionStore? sessionStore]) => ProviderScope(
     overrides: [
-      sessionStoreProvider.overrideWithValue(_SignedOutSessionStore()),
+      sessionStoreProvider.overrideWithValue(
+        sessionStore ?? _SignedOutSessionStore(),
+      ),
       loginUseCaseProvider.overrideWithValue(
         LoginUseCase(_UnusedAuthRepository()),
       ),
@@ -50,6 +52,27 @@ void main() {
     expect(find.byType(SplashScreen), findsNothing);
     expect(find.byType(LoginScreen), findsOneWidget);
   });
+
+  testWidgets('session restore errors are visible and can be retried', (
+    tester,
+  ) async {
+    await tester.pumpWidget(buildApp(_FailOnceSessionStore()));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 1800));
+    await tester.pump();
+
+    expect(
+      find.text('We could not check your saved sign-in. Please retry.'),
+      findsOneWidget,
+    );
+    expect(find.byType(LoginScreen), findsNothing);
+
+    await tester.tap(find.text('Retry'));
+    await tester.pump();
+    await tester.pump();
+
+    expect(find.byType(LoginScreen), findsOneWidget);
+  });
 }
 
 class _SignedOutSessionStore implements SessionStore {
@@ -80,6 +103,19 @@ class _SignedOutSessionStore implements SessionStore {
     required String accessToken,
     required String refreshToken,
   }) async {}
+}
+
+class _FailOnceSessionStore extends _SignedOutSessionStore {
+  var _shouldFail = true;
+
+  @override
+  Future<bool> get hasSession async {
+    if (_shouldFail) {
+      _shouldFail = false;
+      throw StateError('Secure storage read failed');
+    }
+    return false;
+  }
 }
 
 class _UnusedAuthRepository implements AuthRepository {

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shopsphere/core/di/providers.dart';
 
@@ -12,6 +13,10 @@ sealed class SessionState {
 
 class SessionChecking extends SessionState {
   const SessionChecking();
+}
+
+class SessionRestoreFailed extends SessionState {
+  const SessionRestoreFailed();
 }
 
 class SessionSignedOut extends SessionState {
@@ -30,14 +35,20 @@ class SessionController extends Notifier<SessionState> {
 
   @override
   SessionState build() {
-    Future<void>.microtask(_restore);
+    Future<void>.microtask(restore);
     return const SessionChecking();
   }
 
-  Future<void> _restore() async {
-    state = await _store.hasSession
-        ? const SessionSignedIn(null)
-        : const SessionSignedOut();
+  Future<void> restore() async {
+    state = const SessionChecking();
+    try {
+      state = await _store.hasSession
+          ? const SessionSignedIn(null)
+          : const SessionSignedOut();
+    } catch (error, stackTrace) {
+      debugPrint('Unable to restore session: $error\n$stackTrace');
+      state = const SessionRestoreFailed();
+    }
   }
 
   Future<Result<AuthSession>> login(String username, String password) async {

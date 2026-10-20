@@ -10,6 +10,7 @@ import 'core/error/result.dart';
 import 'core/localization/shop_localizations.dart';
 import 'core/theme/app_theme.dart';
 import 'core/theme/theme_controller.dart';
+import 'core/widgets/state_views.dart';
 import 'features/auth/domain/app_user.dart';
 import 'features/auth/presentation/session_controller.dart';
 import 'features/cart/presentation/cart_screen.dart';
@@ -73,6 +74,10 @@ class _AppGateState extends ConsumerState<AppGate> {
     }
     return switch (session) {
       SessionChecking() => const SplashScreen(),
+      SessionRestoreFailed() => ErrorView(
+        message: ShopLocalizations.of(context).text('sessionRestoreError'),
+        onRetry: () => ref.read(sessionProvider.notifier).restore(),
+      ),
       SessionSignedOut(:final notice) => LoginScreen(notice: notice),
       SessionSignedIn() => const ShopperShell(),
     };

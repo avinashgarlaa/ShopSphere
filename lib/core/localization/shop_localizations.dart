@@ -98,6 +98,8 @@ class ShopLocalizations {
     'notProvided': 'Not provided',
     'logout': 'Log out',
     'sessionExpired': 'Your session expired. Please sign in again.',
+    'sessionRestoreError':
+        'We could not check your saved sign-in. Please retry.',
     'language': 'Language',
     'english': 'English',
     'hindi': 'हिन्दी',
@@ -195,6 +197,8 @@ class ShopLocalizations {
     'notProvided': 'उपलब्ध नहीं',
     'logout': 'लॉग आउट',
     'sessionExpired': 'आपका सत्र समाप्त हो गया। कृपया फिर साइन इन करें।',
+    'sessionRestoreError':
+        'आपकी सहेजी गई साइन-इन जानकारी जाँची नहीं जा सकी। कृपया फिर कोशिश करें।',
     'language': 'भाषा',
     'english': 'English',
     'hindi': 'हिन्दी',

@@ -508,7 +508,7 @@ National Institute of Technology, Hamirpur
 🔗 **LinkedIn:** [linkedin.com/in/avinash-garla-35b1b42a0](https://www.linkedin.com/in/avinash-garla-35b1b42a0)
 
 ## AI Usage
-
+Codex By ChatGPT, Copilot By GitHub
 AI assistants were used as a development aid during this project, primarily for:
 - Clarifying Flutter and Dart concepts and debugging issues.
 - Reviewing implementation approaches and suggesting improvements.
